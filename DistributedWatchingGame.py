@@ -275,6 +275,7 @@ class DistributedWatchingGame(DistributedMinigame):
 
     def __gameTimerExpired(self):
         self.notify.debug('game timer expired')
+        self.gameOver()
         # self.showResults()
 
     def showResults(self):
