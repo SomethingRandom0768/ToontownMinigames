@@ -65,6 +65,8 @@ class DistributedWatchingGame(DistributedMinigame):
 
         # Elevator that looks like the spawn area.
         self.elevator = loader.loadModel("phase_11/models/lawbotHQ/LB_ElevatorScaled.bam")
+        self.elevatorDoorCollision = self.elevator.find("**/elevator_Door_collisions*")
+        self.elevatorDoorCollision.removeNode()
         self.elevator.setPosHpr(-22, -98, 0, 90, 0, 0)
         self.elevator.setScale(1.0)
 
