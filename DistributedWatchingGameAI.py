@@ -46,6 +46,15 @@ class DistributedWatchingGameAI(DistributedMinigameAI.DistributedMinigameAI):
     def gameOver(self):
         self.notify.debug('gameOver')
         self.gameFSM.request('cleanup')
+
+        # Faster the player wins, the more jellybeans they get. The more time they take, the less they get.
+        if self.gameWon:
+            for avId in self.avIdList:
+                self.scoreDict[avId] - self.getCurrentGameTime()
+        else:
+            for avId in self.avIdList:
+                self.scoreDict[avId] = 15 
+
         DistributedMinigameAI.DistributedMinigameAI.gameOver(self)
 
     def enterInactive(self):
