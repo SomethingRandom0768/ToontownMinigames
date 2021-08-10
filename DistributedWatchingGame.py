@@ -75,6 +75,20 @@ class DistributedWatchingGame(DistributedMinigame):
         self.consoleRoom.setPosHpr(0.75, 142, 0, 180, 0, 0)
         self.consoleRoom.setScale(1.0)
         
+        # We'll put in the console that the player touches to end the minigame.
+        self.console = loader.loadModel("phase_10/models/cogHQ/CBCraneControls.bam")
+        self.consoleLever = loader.loadModel("phase_10/models/cogHQ/CBCraneStick.bam")
+        self.console.setPosHpr(0, 142, 0, 360, 0, 0)
+        self.consoleLever.setPosHpr(0, 143.75, 3, 0, 25, 0)
+        self.console.setScale(1.0)
+        self.consoleLever.setScale(1.0)
+
+        # We should add in the collision node that the player will touch to end the game.
+        self.barrel = loader.loadModel('phase_4/models/minigames/cogthief_game_gagTank')
+        self.barrel.setPosHpr(0, 145, 0, 360, 0, 0)
+        self.barrel.setScale(0.5)
+        self.barrel.hide()
+        
 
 
         # Stealing from Cog Thief because they really have everything I need in terms of animation.
@@ -131,9 +145,15 @@ class DistributedWatchingGame(DistributedMinigame):
         self.room.removeNode()
         self.elevator.removeNode()
         self.consoleRoom.removeNode()
+        self.console.removeNode()
+        self.consoleLever.removeNode()
+        self.barrel.removeNode()
         del self.room
         del self.elevator
         del self.consoleRoom
+        del self.console
+        del self.consoleLever
+        del self.barrel
         del self.toonSDs
         self.timer.destroy()
         del self.timer
@@ -141,6 +161,7 @@ class DistributedWatchingGame(DistributedMinigame):
         del self.rewardPanel
         self.jarImage.removeNode()
         del self.jarImage
+
 
 
     def onstage(self):
