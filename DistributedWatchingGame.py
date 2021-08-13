@@ -320,6 +320,11 @@ class DistributedWatchingGame(DistributedMinigame):
         toon = self.getAvatar(avId)
         toon.setPos(-16,-97,0) # It doesn't matter since the game is single player.
         toon.setHpr(270,0,0)
+        
+    def handleEnterBarrel(self, colEntry):
+        # sends a message to the AI telling them "HEY, we won the game! Give us more jellybeans!"
+        self.sendUpdate('changeStatus')
+        self.gameOver()
 
     def __gameTimerExpired(self):
         self.notify.debug('game timer expired')
