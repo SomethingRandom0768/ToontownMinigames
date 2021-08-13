@@ -18,6 +18,7 @@ class DistributedWatchingGameAI(DistributedMinigameAI.DistributedMinigameAI):
             self.gameFSM = ClassicFSM.ClassicFSM('DistributedMinigameTemplateAI', [State.State('inactive', self.enterInactive, self.exitInactive, ['play']), State.State('play', self.enterPlay, self.exitPlay, ['cleanup']), State.State('cleanup', self.enterCleanup, self.exitCleanup, ['inactive'])], 'inactive', 'inactive')
             self.addChildGameFSM(self.gameFSM)
             self.gameWon = False
+            self.timeTakenToWin = 0
 
     def generate(self):
         self.notify.debug('generate')
@@ -42,6 +43,12 @@ class DistributedWatchingGameAI(DistributedMinigameAI.DistributedMinigameAI):
         if self.gameFSM.getCurrentState():
             self.gameFSM.request('cleanup')
         DistributedMinigameAI.DistributedMinigameAI.setGameAbort(self)
+    
+    def changeStatus(self):
+        self.gameWon = True
+        self.timeTakenToWin = self.getCurrentGameTime()
+        print(self.timeTakenToWin)
+        self.gameOver()
 
     def gameOver(self):
         self.notify.debug('gameOver')
