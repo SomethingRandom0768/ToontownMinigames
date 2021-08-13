@@ -89,6 +89,23 @@ class DistributedWatchingGame(DistributedMinigame):
         self.barrel.setScale(0.5)
         self.barrel.hide()
         
+        # Collision to end the game.
+       
+    
+        collSphere = CollisionSphere(0, 0, 0, 10)
+        collSphere.setTangible(0)
+        name = 'BarrelSphere'
+        collSphereName = self.uniqueName(name)
+        collNode = CollisionNode(collSphereName)
+        collNode.setFromCollideMask(CTGG.BarrelBitmask)
+        collNode.addSolid(collSphere)
+        colNp = self.barrel.attachNewNode(collNode)
+        colNp.show()
+        handler = CollisionHandlerEvent()
+        handler.setInPattern('barrelHit-%fn')
+        base.cTrav.addCollider(colNp, handler)
+        self.accept('barrelHit-' + collSphereName, self.handleEnterBarrel)
+        
 
 
         # Stealing from Cog Thief because they really have everything I need in terms of animation.
@@ -148,6 +165,7 @@ class DistributedWatchingGame(DistributedMinigame):
         self.console.removeNode()
         self.consoleLever.removeNode()
         self.barrel.removeNode()
+        self.toonCol.removeNode()
         del self.room
         del self.elevator
         del self.consoleRoom
@@ -179,6 +197,13 @@ class DistributedWatchingGame(DistributedMinigame):
         self.__placeToon(self.localAvId)
         playerToon.setSpeed(0, 0)
         base.localAvatar.attachCamera()
+        
+        # Set up the collisions that we'll need to end the game.
+        toonCollisionSphere = CollisionSphere(0, 0, 0, 1)
+        toonCollisionSphere.setTangible(0)
+        toonCollisionNode = CollisionNode('toonCollision')
+        toonCollisionNode.addSolid(toonCollisionSphere)
+        self.toonCol = playerToon.attachNewNode(toonCollisionNode)
 
         toonSD = self.toonSDs[self.localAvId]
         toonSD.enter()
