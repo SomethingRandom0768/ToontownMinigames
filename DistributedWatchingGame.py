@@ -55,13 +55,13 @@ class DistributedWatchingGame(DistributedMinigame):
 
     def getTitle(self):
         '''Gives the title of the game. '''
-        return TTLocalizer.WatchingGameTitle
-       #return "Trick"
+        #return TTLocalizer.WatchingGameTitle
+        return "Red Light, Green Light"
 
     def getInstructions(self):
         '''Gives off the instructions that the players will read. Probably gives it to the AI to display.'''
-        return TTLocalizer.WatchingGameInstructions
-        #return "I'm not showing the game instructions yet lol"
+        #return TTLocalizer.WatchingGameInstructions
+        return "The Toon Resistance needs your help to start Crash Cashbot! Touch the console in the room at the far end to lower Cashbot HQ's defenses but watch out for that cog and don't let them see you moving! Use the arrow keys to move around."
 
     def getMaxDuration(self):
         '''Not exactly sure what this is used for. '''
