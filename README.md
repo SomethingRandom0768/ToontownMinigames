@@ -5,7 +5,7 @@ Games to work on:
 
 1. DistributedWatchingGame:
 
-Barebones Version - Practically done (except for a single bug which I will rectify soon)
+Barebones Version - 99% (except for a single bug which I will rectify soon)
 
 Finalized Version - Not even started, will work on later.
 
