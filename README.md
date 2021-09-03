@@ -3,11 +3,11 @@ Toontown minigames I've created using Toontown School House.
 
 Games to work on:
 
-1. DistributedWatchingGame - 60% - Barebones(read below) Release could be this week!
+1. DistributedWatchingGame:
 
-My plan for this minigame is this: Release the 'barebones" version, that is, the main gameplay prototype without all the bells and whistles of a "polished" Toontown minigame on this repository. That way folks can play the minigame without having to wait for me to make the game look perfect. Plus, this minigame's been in development for about 1-2 months so I think it's best to reward their patience.
+Barebones Version - Practically done (except for a single bug which I will rectify soon)
 
-The second version of the minigame will be the one I plan on showing. This is the  "cream of the crop," the build that will have the little things that separates prototypes from completed minigames. Stay TOOned!
+Finalized Version - Not even started, will work on later.
 
 2. ??? - Somewhat planning this for now (no promises), but I think it would be a cool idea if done right, especially in Toontown.
 
