@@ -15,10 +15,11 @@ class DistributedWatchingGameAI(DistributedMinigameAI.DistributedMinigameAI):
         except:
             self.DistributedWatchingGameAI_initialized = 1
             DistributedMinigameAI.DistributedMinigameAI.__init__(self, air, minigameId)
-            self.gameFSM = ClassicFSM.ClassicFSM('DistributedMinigameTemplateAI', [State.State('inactive', self.enterInactive, self.exitInactive, ['play']), State.State('play', self.enterPlay, self.exitPlay, ['cleanup']), State.State('cleanup', self.enterCleanup, self.exitCleanup, ['inactive'])], 'inactive', 'inactive')
+            self.gameFSM = ClassicFSM.ClassicFSM('DistributedWatchingGameAI', [State.State('inactive', self.enterInactive, self.exitInactive, ['play']), State.State('play', self.enterPlay, self.exitPlay, ['cleanup']), State.State('cleanup', self.enterCleanup, self.exitCleanup, ['inactive'])], 'inactive', 'inactive')
             self.addChildGameFSM(self.gameFSM)
             self.gameWon = False
             self.timeTakenToWin = 0
+            self.jellybeansTaken = 0
 
     def generate(self):
         self.notify.debug('generate')
@@ -44,11 +45,20 @@ class DistributedWatchingGameAI(DistributedMinigameAI.DistributedMinigameAI):
             self.gameFSM.request('cleanup')
         DistributedMinigameAI.DistributedMinigameAI.setGameAbort(self)
     
-    def changeStatus(self):
+    def changeStatusToWin(self):
         self.gameWon = True
         self.timeTakenToWin = self.getCurrentGameTime()
-        print(self.timeTakenToWin)
+        print('The time won is ' + str(50 - self.timeTakenToWin))
         self.gameOver()
+    
+    def changeStatusToLoss(self):
+        self.timeTakenToLose = self.getCurrentGameTime()
+        print('The time lost is ' + str(50 - self.timeTakenToLose))
+        self.gameOver()
+    
+    def reduceJellybeans(self, numbertoLower):
+        self.jellybeansTaken += numbertoLower
+        print("Lowering the amount of jellybeans the player has by 5. Current jellybean count is: " + str(self.jellybeansTaken))
 
     def gameOver(self):
         self.notify.debug('gameOver')
@@ -57,7 +67,10 @@ class DistributedWatchingGameAI(DistributedMinigameAI.DistributedMinigameAI):
         # Faster the player wins, the more jellybeans they get. The more time they take, the less they get.
         if self.gameWon:
             for avId in self.avIdList:
-                self.scoreDict[avId] - self.getCurrentGameTime()
+                if self.jellybeansTaken:
+                    self.scoreDict[avId] = ( (WTGG.GameTime - self.timeTakenToWin) - self.jellybeansTaken)
+                else:
+                    self.scoreDict[avId] = (WTGG.GameTime - self.timeTakenToWin)
         else:
             for avId in self.avIdList:
                 self.scoreDict[avId] = 15 
@@ -72,13 +85,20 @@ class DistributedWatchingGameAI(DistributedMinigameAI.DistributedMinigameAI):
 
     def enterPlay(self):
         self.notify.debug('enterPlay')
+        taskMgr.doMethodLater(WTGG.GameTime, self.timerExpired, self.taskName('gameTimer'))
+
+    def timerExpired(self, task):
+        '''Game ends once the timer is done.'''
+        self.notify.debug("timer expired")
         self.gameOver()
+        return Task.done
 
     def exitPlay(self):
         pass
 
     def enterCleanup(self):
         self.notify.debug('enterCleanup')
+        taskMgr.remove(self.taskName('gameTimer'))
         self.gameFSM.request('inactive')
 
     def exitCleanup(self):
