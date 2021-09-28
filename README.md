@@ -9,7 +9,9 @@ Barebones Version - 99% (I haven't gotten a chance to look at the bug as I finis
 
 Finalized Version - Finished! The final product can be seen at https://www.reddit.com/r/toontownrewritten/comments/pnrbfc/i_recreated_ttrs_red_light_green_light_trolley/?ref=share&ref_source=link
 
-2. ??? - Somewhat planning this for now (no promises), but I think it would be a cool idea if done right, especially in Toontown.
+2. DistributedGardeningGame:
+
+Won't be put on here unfortunately.
 
 Things I've learned about since starting to work on this:
 - Using the DC file to create AI functions that allow communication between the minigame and its AI server.
