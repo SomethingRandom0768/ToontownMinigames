@@ -13,6 +13,9 @@ Finalized Version - Finished! The final product can be seen at https://www.reddi
 
 Won't be put on here unfortunately.
 
+3. ???:
+Cool idea that would be fun to recreate in Toontown.
+
 Things I've learned about since starting to work on this:
 - Using the DC file to create AI functions that allow communication between the minigame and its AI server.
 - Using the taskMgr to execute functions at certain times
